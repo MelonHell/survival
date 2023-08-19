@@ -1,28 +1,30 @@
 package ru.melonhell.survival.platform.bukkit;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import ru.melonhell.survival.api.SWrapper;
 import ru.melonhell.survival.api.commands.SCommandSender;
 
-public interface BukkitSCommandSender extends SCommandSender {
+@UtilityClass
+public class BukkitSCommandSenderConverter {
 
     @Contract("null -> null")
-    static BukkitSCommandSender surv(CommandSender handle) {
+    public SCommandSender surv(CommandSender handle) {
         if (handle == null) return null;
 
-        if (handle instanceof BukkitSCommandSender surv)
+        if (handle instanceof SCommandSender surv)
             return surv;
 
         if (handle instanceof Player player)
-            return BukkitSPlayer.surv(player);
+            return BukkitSPlayerConverter.surv(player);
 
         return new BukkitSCommandSenderWrapper(handle);
     }
 
     @Contract("null -> null")
-    static CommandSender unsurv(SCommandSender surv) {
+    public CommandSender unsurv(SCommandSender surv) {
         if (surv == null) return null;
 
         if (surv instanceof CommandSender handle)

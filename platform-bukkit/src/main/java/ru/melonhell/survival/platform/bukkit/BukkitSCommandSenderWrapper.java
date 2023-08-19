@@ -5,11 +5,12 @@ import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import ru.melonhell.survival.api.SWrapper;
+import ru.melonhell.survival.api.commands.SCommandSender;
 
 record BukkitSCommandSenderWrapper(
         @Delegate(types = {Audience.class})
         @NotNull CommandSender handle
-) implements BukkitSCommandSender, SWrapper {
+) implements SCommandSender, SWrapper {
 
     @Override
     public boolean hasPermission(@NotNull String permission) {

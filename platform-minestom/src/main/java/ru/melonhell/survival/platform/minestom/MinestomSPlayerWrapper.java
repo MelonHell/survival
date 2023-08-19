@@ -6,6 +6,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.melonhell.survival.api.SPlayer;
 import ru.melonhell.survival.api.SWorld;
 import ru.melonhell.survival.api.SWrapper;
 import ru.melonhell.survival.api.skins.SSkinProperty;
@@ -15,7 +16,7 @@ import java.util.UUID;
 record MinestomSPlayerWrapper(
         @Delegate(types = {Audience.class})
         @NotNull Player handle
-) implements MinestomSPlayer, SWrapper {
+) implements SPlayer, SWrapper {
 
     @Override
     public @NotNull UUID uuid() {
@@ -24,7 +25,7 @@ record MinestomSPlayerWrapper(
 
     @Override
     public @Nullable SWorld world() {
-        return MinestomSWorld.surv(handle.getInstance());
+        return MinestomSWorldConverter.surv(handle.getInstance());
     }
 
     @Override

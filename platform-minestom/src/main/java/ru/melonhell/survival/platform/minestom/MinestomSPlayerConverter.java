@@ -1,24 +1,26 @@
 package ru.melonhell.survival.platform.minestom;
 
+import lombok.experimental.UtilityClass;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import ru.melonhell.survival.api.SPlayer;
 import ru.melonhell.survival.api.SWrapper;
 
-public interface MinestomSPlayer extends SPlayer, MinestomSCommandSender {
+@UtilityClass
+public class MinestomSPlayerConverter {
 
     @Contract("null -> null")
-    static MinestomSPlayer surv(Player minestom) {
+    public SPlayer surv(Player minestom) {
         if (minestom == null) return null;
 
-        if (minestom instanceof MinestomSPlayer survivor)
+        if (minestom instanceof SPlayer survivor)
             return survivor;
 
         return new MinestomSPlayerWrapper(minestom);
     }
 
     @Contract("null -> null")
-    static Player unsurv(SPlayer survivor) {
+    public Player unsurv(SPlayer survivor) {
         if (survivor == null) return null;
 
         if (survivor instanceof Player minestom)

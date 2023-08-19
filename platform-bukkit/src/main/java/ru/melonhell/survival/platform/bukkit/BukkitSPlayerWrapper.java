@@ -6,6 +6,7 @@ import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.melonhell.survival.api.SPlayer;
 import ru.melonhell.survival.api.SWorld;
 import ru.melonhell.survival.api.SWrapper;
 import ru.melonhell.survival.api.skins.SSkinProperty;
@@ -15,7 +16,7 @@ import java.util.UUID;
 record BukkitSPlayerWrapper(
         @Delegate(types = {Audience.class})
         @NotNull Player handle
-) implements BukkitSPlayer, SWrapper {
+) implements SPlayer, SWrapper {
 
     @Override
     public @NotNull UUID uuid() {
@@ -24,7 +25,7 @@ record BukkitSPlayerWrapper(
 
     @Override
     public @NotNull SWorld world() {
-        return BukkitSWorld.surv(handle.getWorld());
+        return BukkitSWorldConverter.surv(handle.getWorld());
     }
 
     @Override

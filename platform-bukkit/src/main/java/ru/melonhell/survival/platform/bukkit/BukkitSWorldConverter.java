@@ -1,24 +1,26 @@
 package ru.melonhell.survival.platform.bukkit;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.World;
 import org.jetbrains.annotations.Contract;
 import ru.melonhell.survival.api.SWorld;
 import ru.melonhell.survival.api.SWrapper;
 
-public interface BukkitSWorld extends SWorld {
+@UtilityClass
+public class BukkitSWorldConverter {
 
     @Contract("null -> null")
-    static BukkitSWorld surv(World handle) {
+    public SWorld surv(World handle) {
         if (handle == null) return null;
 
-        if (handle instanceof BukkitSWorld surv)
+        if (handle instanceof SWorld surv)
             return surv;
 
         return new BukkitSWorldWrapper(handle);
     }
 
     @Contract("null -> null")
-    static World unsurv(SWorld surv) {
+    public World unsurv(SWorld surv) {
         if (surv == null) return null;
 
         if (surv instanceof World handle)
