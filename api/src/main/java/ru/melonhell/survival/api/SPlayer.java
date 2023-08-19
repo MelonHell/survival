@@ -6,7 +6,9 @@ import ru.melonhell.survival.api.commands.SCommandSender;
 import ru.melonhell.survival.api.skins.SSkinProperty;
 
 public interface SPlayer extends SCommandSender, SEntity {
+
     @NotNull String username();
 
     @Nullable SSkinProperty skin();
+
 }

@@ -1,34 +1,33 @@
 package ru.melonhell.survival.platform.minestom;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
 import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import ru.melonhell.survival.api.SWorld;
+import ru.melonhell.survival.api.SWrapper;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(of = {"handle"})
-public class MinestomSWorld implements SWorld {
-
-    @Getter
-    @Accessors(fluent = true)
-    private final @NotNull Instance handle;
+public interface MinestomSWorld extends SWorld {
 
     @Contract("null -> null")
-    public static SWorld wrap(Instance handle) {
-        if (handle == null) return null;
+    static MinestomSWorld surv(Instance minestom) {
+        if (minestom == null) return null;
 
-        return new MinestomSWorld(handle);
+        if (minestom instanceof MinestomSWorld survivor)
+            return survivor;
+
+        return new MinestomSWorldWrapper(minestom);
     }
 
     @Contract("null -> null")
-    public static Instance unwrap(SWorld wrapper) {
-        if (wrapper == null) return null;
+    static Instance unsurv(SWorld survivor) {
+        if (survivor == null) return null;
 
-        return (Instance) wrapper.handle();
+        if (survivor instanceof Instance minestom)
+            return minestom;
+
+        if (survivor instanceof SWrapper wrapper && wrapper.handle() instanceof Instance minestom)
+            return minestom;
+
+        throw new IllegalArgumentException();
     }
+
 }

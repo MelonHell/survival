@@ -1,34 +1,33 @@
 package ru.melonhell.survival.platform.bukkit;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
 import org.bukkit.World;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import ru.melonhell.survival.api.SWorld;
+import ru.melonhell.survival.api.SWrapper;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(of = {"handle"})
-public class BukkitSWorld implements SWorld {
-
-    @Getter
-    @Accessors(fluent = true)
-    private final @NotNull World handle;
+public interface BukkitSWorld extends SWorld {
 
     @Contract("null -> null")
-    public static SWorld wrap(World handle) {
+    static BukkitSWorld surv(World handle) {
         if (handle == null) return null;
 
-        return new BukkitSWorld(handle);
+        if (handle instanceof BukkitSWorld surv)
+            return surv;
+
+        return new BukkitSWorldWrapper(handle);
     }
 
     @Contract("null -> null")
-    public static World unwrap(SWorld wrapper) {
-        if (wrapper == null) return null;
+    static World unsurv(SWorld surv) {
+        if (surv == null) return null;
 
-        return (World) wrapper.handle();
+        if (surv instanceof World handle)
+            return handle;
+
+        if (surv instanceof SWrapper wrapper && wrapper.handle() instanceof World handle)
+            return handle;
+
+        throw new IllegalArgumentException();
     }
+
 }

@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("ru.melonhell.survival:api:0.0.1")
-    implementation("ru.melonhell.survival:platform-bukkit:0.0.1")
+    implementation("ru.melonhell.survival:api:0.0.2")
+    implementation("ru.melonhell.survival:platform-bukkit:0.0.2")
 }
 ```
