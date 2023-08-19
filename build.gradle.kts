@@ -40,7 +40,7 @@ subprojects {
 
         repositories {
             mavenLocal()
-            melonhellPrivate()
+            maven("https://maven.melonhell.ru/public/") { melonhellCredentials() }
         }
     }
 }
@@ -51,6 +51,3 @@ fun AuthenticationSupported.melonhellCredentials() = credentials {
         password = extensions.extraProperties["melonhell.password"]?.toString()
     }
 }
-
-fun RepositoryHandler.melonhellPrivate() =
-    maven("https://maven.melonhell.ru/private/") { melonhellCredentials() }
