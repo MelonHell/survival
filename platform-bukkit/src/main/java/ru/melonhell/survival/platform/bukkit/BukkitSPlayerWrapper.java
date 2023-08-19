@@ -1,15 +1,9 @@
 package ru.melonhell.survival.platform.bukkit;
 
 import com.destroystokyo.paper.profile.ProfileProperty;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
 import lombok.experimental.Delegate;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.melonhell.survival.api.SWorld;
@@ -18,15 +12,10 @@ import ru.melonhell.survival.api.skins.SSkinProperty;
 
 import java.util.UUID;
 
-@ApiStatus.Internal
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@EqualsAndHashCode(of = {"handle"})
-public class BukkitSPlayerWrapper implements BukkitSPlayer, SWrapper {
-
-    @Getter
-    @Accessors(fluent = true)
-    @Delegate(types = {Audience.class})
-    private final @NotNull Player handle;
+record BukkitSPlayerWrapper(
+        @Delegate(types = {Audience.class})
+        @NotNull Player handle
+) implements BukkitSPlayer, SWrapper {
 
     @Override
     public @NotNull UUID uuid() {
